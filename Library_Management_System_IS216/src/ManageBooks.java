@@ -405,7 +405,7 @@ public class ManageBooks extends javax.swing.JFrame {
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 580, 200));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 25)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel11.setForeground(new java.awt.Color(251, 51, 51));
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jframe/AddNewBookIcons/AddNewBookIcons/icons8_Books_52px_1.png"))); // NOI18N
         jLabel11.setText("Manage Books");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 230, -1));
