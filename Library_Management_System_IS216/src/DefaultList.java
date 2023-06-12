@@ -1,7 +1,6 @@
 
 
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JOptionPane;
 import java.sql.*;
 
 /*
@@ -29,7 +28,7 @@ public class DefaultList extends javax.swing.JFrame {
         Date todaysDate =new Date(1);
         
         try{
-             Class.forName("com.mysql.jdbc.Driver");
+             Class.forName("com.mysql.cj.jdbc.Driver");
              Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_ms","root","TRIEUBUI003@");
              PreparedStatement pst = con.prepareStatement("select * from issue_book_details where due date < ? and status= ?");
              pst.setDate(1,todaysDate);

@@ -10,12 +10,12 @@ import javax.swing.JOptionPane;
  * @author trieu
  */ 
 
-public class SingnupPage extends javax.swing.JFrame {
+public class SignupPage extends javax.swing.JFrame {
 
     /**
      * Creates new form SingnupPage
      */
-    public SingnupPage() {
+    public SignupPage() {
         initComponents();
     }
     //method to insert values intot users table
@@ -332,6 +332,11 @@ public class SingnupPage extends javax.swing.JFrame {
 
         rSMaterialButtonCircle2.setBackground(new java.awt.Color(51, 51, 255));
         rSMaterialButtonCircle2.setText("LOGIN");
+        rSMaterialButtonCircle2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSMaterialButtonCircle2ActionPerformed(evt);
+            }
+        });
         jPanel2.add(rSMaterialButtonCircle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 570, 160, 40));
 
         jLabel18.setBackground(new java.awt.Color(255, 51, 51));
@@ -387,6 +392,13 @@ public class SingnupPage extends javax.swing.JFrame {
          }  
     }//GEN-LAST:event_txt_usernameFocusLost
 
+    private void rSMaterialButtonCircle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2ActionPerformed
+        // TODO add your handling code here:
+        LoginPage loginp = new LoginPage();
+        loginp.setVisible(true);
+        dispose( );
+    }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -404,20 +416,21 @@ public class SingnupPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             
-                new SingnupPage().setVisible(true);
+                new SignupPage().setVisible(true);
             
         });
     }

@@ -298,13 +298,6 @@ public class ViewAllRecord extends javax.swing.JFrame {
 
     private void rSMaterialButtonCircle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1ActionPerformed
         // TODO add your handling code here:
-        if (date_fromDate.getDatoFecha() != null && date_toDate.getDatoFecha()!= null){
-            clearTable();
-            search();
-        
-        }else{
-        JOptionPane.showMessageDialog(this, "please select a date");
-                }
     }//GEN-LAST:event_rSMaterialButtonCircle1ActionPerformed
 
     private void tbl_issuebookdetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_issuebookdetailsMouseClicked
@@ -325,6 +318,13 @@ public class ViewAllRecord extends javax.swing.JFrame {
 
     private void rSMaterialButtonCircle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2ActionPerformed
         // TODO add your handling code here:
+        if (date_fromDate.getDatoFecha() != null && date_toDate.getDatoFecha()!= null){
+            clearTable();
+            search();
+        
+        }else{
+        JOptionPane.showMessageDialog(this, "please select a date");
+                }
     }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
 
     private void rSMaterialButtonCircle1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1MouseClicked

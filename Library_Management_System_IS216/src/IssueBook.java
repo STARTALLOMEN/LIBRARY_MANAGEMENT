@@ -145,7 +145,7 @@ public class IssueBook extends javax.swing.JFrame {
       try{
             Connection con = DBConnection.getConnection();
             PreparedStatement pst = con.prepareStatement
-        ("update issue_book_detail set quantity = quantity -1 where book id = ?");
+        ("update book_details set quantity = quantity -1 where book_id = ?");
             pst.setInt(1,bookId);
             int rowCount =pst.executeUpdate();
            if(rowCount >0){

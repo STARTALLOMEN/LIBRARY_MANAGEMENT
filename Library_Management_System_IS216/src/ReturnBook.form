@@ -120,11 +120,11 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/jframe/AddNewBookIcons/AddNewBookIcons/icons8_Literature_100px_1.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Book Details"/>
+                <Property name="text" type="java.lang.String" value="Issue Book Details"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="60" y="130" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="30" y="130" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>

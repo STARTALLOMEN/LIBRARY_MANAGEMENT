@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class LoginPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form SingnupPage
+     * Creates new form SignupPage
      */
     public LoginPage() {
         initComponents();
@@ -44,9 +44,9 @@ public class LoginPage extends javax.swing.JFrame {
            
            Class.forName("com.mysql.jdbc.Driver");
            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_ms","root","TRIEUBUI003@");
-           PreparedStatement pst = con.prepareStatement("select * from users where name = ? and password= ?");
+           PreparedStatement pst = con.prepareStatement("select * from users where name = ? and password = ?");
            pst.setString(1, name);
-           pst.setString(1, pwd);
+           pst.setString(2, pwd);
            ResultSet rs= pst.executeQuery();
            if (rs.next()){
             JOptionPane.showMessageDialog(this, "login successful");
@@ -274,7 +274,9 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_passwordActionPerformed
 
     private void rSMaterialButtonCircle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1ActionPerformed
-
+        SignupPage signup = new SignupPage();
+        signup.setVisible(true);
+        dispose( );
     }//GEN-LAST:event_rSMaterialButtonCircle1ActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -283,13 +285,13 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void txt_usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_usernameFocusLost
-
+    
     }//GEN-LAST:event_txt_usernameFocusLost
 
     private void rSMaterialButtonCircle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2ActionPerformed
         if(validateLogin()){
-        login();
-        };        // TODO add your handling code here:
+            login();
+        }    // TODO add your handling code here:
     }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
 
     /**
@@ -309,14 +311,15 @@ public class LoginPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

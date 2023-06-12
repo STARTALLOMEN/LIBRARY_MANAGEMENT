@@ -27,7 +27,7 @@ public class ReturnBook extends javax.swing.JFrame {
     // display
     public void getIssueBookDetails(){
        int  bookId = Integer.parseInt(txt_bookId.getText());
-       int  studentId = Integer.parseInt(txt_bookId.getText());
+       int  studentId = Integer.parseInt(txt_studentId.getText());
        
         try{
             Connection con = DBConnection.getConnection();
@@ -50,7 +50,7 @@ public class ReturnBook extends javax.swing.JFrame {
  
             }else{
                 lbl_bookError.setText("No Record Found");
-                     lbl_issueId.setText(rs.getString(""));                
+                lbl_issueId.setText(rs.getString(""));                
                 lbl_bookName.setText(rs.getString(""));
                 lbl_studentName.setText(rs.getString(""));
                 lbl_issueDate.setText(rs.getString(""));
@@ -72,12 +72,12 @@ public class ReturnBook extends javax.swing.JFrame {
         try{
             Connection con = DBConnection.getConnection();
             PreparedStatement pst = con.prepareStatement
-        ("update issue_book_details set status =? where student_id= = ? and book_id = ? and status =? "
-                + "values(?,?,?,?,?,?,?)");
-            pst.setString(2,"returned");
-            pst.setInt(1,bookId);
-            pst.setInt(3,studentId);
-            pst.setString(7,"pending");
+        ("update issue_book_details set status = ? where student_id= ? and book_id = ? and status = ? ");
+            pst.setString(1,"returned");
+            pst.setInt(2,studentId);
+            pst.setInt(3,bookId);
+            pst.setString(4,"pending");
+            
             int rowCount =pst.executeUpdate();
             if(rowCount >0){
                 isReturned = true;
@@ -100,13 +100,13 @@ public class ReturnBook extends javax.swing.JFrame {
       try{
             Connection con = DBConnection.getConnection();
             PreparedStatement pst = con.prepareStatement
-        ("update issue_book_detail set quantity = quantity +1 where book id = ?");
+        ("update book_details set quantity = quantity + 1 where book_id = ?");
             pst.setInt(1,bookId);
             int rowCount =pst.executeUpdate();
            if(rowCount >0){
                 JOptionPane.showMessageDialog(this, "Book Count Updated");
-               
-              
+                 
+          
             }else
             {
                JOptionPane.showMessageDialog(this, "Book Count Fail");
@@ -197,8 +197,8 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 22)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jframe/AddNewBookIcons/AddNewBookIcons/icons8_Literature_100px_1.png"))); // NOI18N
-        jLabel12.setText("Book Details");
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
+        jLabel12.setText("Issue Book Details");
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -433,10 +433,10 @@ public class ReturnBook extends javax.swing.JFrame {
     private void rSMaterialButtonCircle3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle3ActionPerformed
         // TODO add your handling code here:
         if(returnBook()== true){
-        JOptionPane.showMessageDialog(this, "Book Return Successfully");
-        updateBookCount();
+            JOptionPane.showMessageDialog(this, "Book Return Successfully");
+            updateBookCount();
         }else{
-        JOptionPane.showMessageDialog(this, "Book Return Failed");
+            JOptionPane.showMessageDialog(this, "Book Return Failed");
         }
     }//GEN-LAST:event_rSMaterialButtonCircle3ActionPerformed
     

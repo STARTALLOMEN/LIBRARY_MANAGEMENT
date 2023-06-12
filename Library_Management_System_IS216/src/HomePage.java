@@ -4,9 +4,6 @@
  */
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,57 +31,51 @@ public class HomePage extends javax.swing.JFrame {
         setBookDetailsToTable();
         setDatatoCards();
     }
+    public void showPieChart() {
+    try {
+        Connection con = DBConnection.getConnection();
+        String sql = "SELECT book_name, COUNT(*) AS issue_count FROM issue_book_details GROUP BY book_name";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
 
-    public void showPieChart(){
-        
-        //create dataset
-      DefaultPieDataset barDataset = new DefaultPieDataset( );
-      
-      try{
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
 
-             Connection con = DBConnection.getConnection();
-             String sql= "select book_name ,count(*) as issue_count from issue_book_details group by book_id";
-             Statement st= con.createStatement();
-             ResultSet rs =st.executeQuery(sql);
-             
-             while (rs.next()){
-                 barDataset.setValue(rs.getString("book_name") , Double.valueOf(rs.getDouble("issue_count")));  
-
-                 
-
-             }
-             
-        }catch(Exception e){
-            e.printStackTrace();
+        while (rs.next()) {
+            String bookName = rs.getString("book_name");
+            int issueCount = rs.getInt("issue_count");
+            pieDataset.setValue(bookName, issueCount);
         }
 
+        JFreeChart pieChart = ChartFactory.createPieChart("Issue Book Details", pieDataset, true, true, false);
+        PiePlot piePlot = (PiePlot) pieChart.getPlot();
 
-      
-      //create chart
-       JFreeChart piechart = ChartFactory.createPieChart("Issue Book Details",barDataset, true,true,false);//explain
-      
-        PiePlot piePlot =(PiePlot) piechart.getPlot();
-      
-       //changing pie chart blocks colors
-       piePlot.setSectionPaint("IPhone 5s", new Color(255,255,102));
-        piePlot.setSectionPaint("SamSung Grand", new Color(102,255,102));
-        piePlot.setSectionPaint("MotoG", new Color(255,102,153));
-        piePlot.setSectionPaint("Nokia Lumia", new Color(0,204,204));
-      
-       
+        // Chỉnh màu sắc cho các phần tử trong biểu đồ pie
+        piePlot.setSectionPaint("book_name", new Color(255, 255, 102));
+        piePlot.setSectionPaint("book_name", new Color(102, 255, 102));
+        piePlot.setSectionPaint("bookname", new Color(255, 102, 153));
+        piePlot.setSectionPaint("book_name", new Color(0, 204, 204));
+
         piePlot.setBackgroundPaint(Color.white);
-        
-        //create chartPanel to display chart(graph)
-        ChartPanel barChartPanel = new ChartPanel(piechart);
+
+        ChartPanel pieChartPanel = new ChartPanel(pieChart);
         panelPieChart.removeAll();
-        panelPieChart.add(barChartPanel, BorderLayout.CENTER);
-        panelPieChart.validate();
+        panelPieChart.add(pieChartPanel, BorderLayout.CENTER);
+        panelPieChart.revalidate();
+        panelPieChart.repaint();
+
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
+
+
     //to set the student details into the table
     
     public void setStudentDetailsToTable(){
         try{
-             Class.forName("com.mysql.jdbc.Driver");
+             Class.forName("com.mysql.cj.jdbc.Driver");
              Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_ms","root","TRIEUBUI003@");
              Statement st= con.createStatement();
              ResultSet rs =st.executeQuery("select * from student_details");
@@ -108,7 +99,7 @@ public class HomePage extends javax.swing.JFrame {
     //to set the book details into the table
     public void setBookDetailsToTable(){
         try{
-             Class.forName("com.mysql.jdbc.Driver");
+             Class.forName("com.mysql.cj.jdbc.Driver");
              Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_ms","root","TRIEUBUI003@");
              Statement st= con.createStatement();
              ResultSet rs =st.executeQuery("select * from book_details");
@@ -128,35 +119,43 @@ public class HomePage extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    public void setDatatoCards(){
-        Statement st = null;
-        ResultSet rs =null;
+    public void setDatatoCards() {
+    try {
+        Connection con = DBConnection.getConnection();
+        Statement st = con.createStatement();
+        ResultSet rs;
         long l =System.currentTimeMillis();
         Date todaysDate= new Date(l);
-        try{
-             Class.forName("com.mysql.jdbc.Driver");
-             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_ms","root","TRIEUBUI003@");
-             st= con.createStatement();
-             rs =st.executeQuery("select * from book_details");
-             rs.last();
-             lbl_nofBook.setText(Integer.toString(rs.getRow()));
-             
-             rs =st.executeQuery("select * from student_details");
-             rs.last();
-             lbl_nofStudent.setText(Integer.toString(rs.getRow()));
 
-             rs =st.executeQuery("select * from issue_book_details where status = '"+"pending"+"'");
-             rs.last();
-             lbl_issueBook.setText(Integer.toString(rs.getRow()));
-             
-             rs =st.executeQuery("select * from issue_book_details where due_date < '"+todaysDate+"'and status = '"+"pending"+"'");
-             rs.last();
-             lbl_defaulterList.setText(Integer.toString(rs.getRow()));
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        // Lấy tổng số sách trong bảng book_details
+        rs = st.executeQuery("SELECT COUNT(*) AS total_books FROM book_details");
+        rs.next();
+        int totalBooks = rs.getInt("total_books");
+        lbl_nofBook.setText(Integer.toString(totalBooks));
+
+        // Lấy tổng số sinh viên trong bảng student_details
+        rs = st.executeQuery("SELECT COUNT(*) AS total_students FROM student_details");
+        rs.next();
+        int totalStudents = rs.getInt("total_students");
+        lbl_nofStudent.setText(Integer.toString(totalStudents));
+
+        // Lấy tổng số sách đã được mượn trong bảng issue_book_details
+        rs = st.executeQuery("SELECT COUNT(*) AS total_issued_books FROM issue_book_details");
+        rs.next();
+        int totalIssuedBooks = rs.getInt("total_issued_books");
+        lbl_issueBook.setText(Integer.toString(totalIssuedBooks));
+
+        // Lấy danh sách các sách bị trễ hạn chưa trả trong bảng issue_book_details
+        rs = st.executeQuery("SELECT COUNT(*) AS total_defaulters FROM issue_book_details WHERE due_date < '"+todaysDate+"' AND status = 'pending'");
+        rs.next();
+        int totalDefaulters = rs.getInt("total_defaulters");
+        lbl_defaulterList.setText(Integer.toString(totalDefaulters));
+
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -813,6 +812,11 @@ public class HomePage extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jframe/adminIcons/adminIcons/icons8_Exit_26px_2.png"))); // NOI18N
         jLabel14.setText("Log out");
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 150, 30));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 220, 590));
@@ -1139,6 +1143,13 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
         jPanel43.setBackground(mouseExitColor);
     }//GEN-LAST:event_jLabel44MouseExited
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // TODO add your handling code here:
+        LoginPage loginp = new LoginPage();
+        loginp.setVisible(true);
+        dispose( );
+    }//GEN-LAST:event_jLabel14MouseClicked
 
     /**
      * @param args the command line arguments
